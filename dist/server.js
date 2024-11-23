@@ -7,13 +7,22 @@ const express_1 = __importDefault(require("express"));
 const user_1 = require("./user");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.get('/create/user', async (req, res) => {
+app.get('/', async (req, res) => {
+    try {
+        res.send("Api básica com express e typescript");
+    }
+    catch (error) {
+        res.status(400).send("deu ruim");
+    }
+});
+app.post('/create/user', async (req, res) => {
     try {
         const new_user = await (0, user_1.createUser)(req.body);
         const new_user_stringfied = JSON.stringify(new_user);
         res.status(201).json({ message: "Usuário Criado com Sucesso", user: new_user_stringfied });
     }
     catch (error) {
+        res.send("ERRO NA API " + error);
         res.status(400).json({ error: error });
     }
 });

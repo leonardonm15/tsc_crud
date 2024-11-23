@@ -8,16 +8,15 @@ export interface User {
     age: number;
 }
 
-export async function createUser(req: {name: string, email: string, age: number}): Promise<User> { // l1
+export async function createUser(req: {nome: string, email: string, age: number}): Promise<User> { // l1
     try {
-        const {name, email, age} = req; // string string number
 
-        if (!name || !email || !age) {
+        if (!req.nome || !req.email || !req.age) {
             throw new Error("Campos obrigatórios estão ausentes, name, email ou age");
         }
 
         const sql: string = uq.CREATE_USER;
-        const params: [string, string, number] = [name, email, age];
+        const params: [string, string, number] = [req.nome, req.email, req.age];
 
         const result: User[] = await query(sql, params);
 
